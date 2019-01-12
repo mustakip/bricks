@@ -1,24 +1,48 @@
-const addSuffix = function(value) {
+const addPxSuffix = function(value) {
   return value + "px";
 };
 
+const getMainDiv = function(document) {
+  return document.getElementById("screen");
+};
+
+const getPaddleDiv = function(document) {
+  return document.getElementById("paddle1");
+};
+
+const getBallDiv = function(document) {
+  return document.getElementById("ball1");
+};
+
+const createDiv = function(document) {
+  return document.createElement("div");
+};
+
 const createPaddle = function(document) {
-  let mainDiv = document.getElementById("screen");
-  let paddleDiv = document.createElement("div");
+  let mainDiv = getMainDiv(document);
+  let paddleDiv = createDiv(document);
   paddleDiv.id = "paddle1";
   paddleDiv.className = "paddle";
   mainDiv.appendChild(paddleDiv);
 };
 
-const drawPaddle = function(paddleDiv, paddle) {
-  paddleDiv.style.width = addSuffix(paddle.width);
-  paddleDiv.style.height = addSuffix(paddle.height);
-  paddleDiv.style.left = addSuffix(paddle.left);
-  paddleDiv.style.bottom = addSuffix(paddle.bottom);
+const createBall = function(document) {
+  let mainDiv = getMainDiv(document);
+  let ballDiv = createDiv(document);
+  ballDiv.id = "ball1";
+  ballDiv.className = "ball";
+  mainDiv.appendChild(ballDiv);
 };
 
-const handleKeypress = function(paddle) {
-  let paddleDiv = document.getElementById("paddle1");
+const drawPaddle = function(paddleDiv, paddle) {
+  paddleDiv.style.width = addPxSuffix(paddle.width);
+  paddleDiv.style.height = addPxSuffix(paddle.height);
+  paddleDiv.style.left = addPxSuffix(paddle.left);
+  paddleDiv.style.bottom = addPxSuffix(paddle.bottom);
+};
+
+const handleKeypress = function(document, paddle) {
+  let paddleDiv = getPaddleDiv(document);
   if (event.key == "ArrowRight") {
     paddle.moveRight();
     drawPaddle(paddleDiv, paddle);
@@ -29,12 +53,22 @@ const handleKeypress = function(paddle) {
   }
 };
 
+const moveBall = function(document, ball) {
+  ball.move();
+  let balldiv = getBallDiv(document);
+  drawPaddle(balldiv, ball);
+};
+
 const initialize = function() {
-  let main = document.getElementById("screen");
+  let main = getMainDiv(document);
   main.focus();
   let paddle = new Paddle(100, 15, 430, 3);
-  main.onkeydown = handleKeypress.bind(null, paddle);
+  let ball = new Ball(15, 500, 400);
+  let game = new Game(960, 700, paddle, ball);
+  main.onkeydown = handleKeypress.bind(null, document, paddle);
   createPaddle(document);
+  createBall(document);
+  setInterval(moveBall.bind(null, document, ball), 500);
 };
 
 window.onload = initialize;
