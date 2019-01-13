@@ -1,5 +1,5 @@
 main {
-  margin:0 auto;
+  margin: auto;
   width:960px;
   height:700px;
   border:2px solid black;
@@ -7,12 +7,13 @@ main {
 }
 
 .paddle {
-  width:100px;
-  height:15px;
+  width:120px;
+  height:20px;
   background-color: blue;
   position: absolute;
-  left:430px;
-  bottom:3px;
+  left:420px;
+  bottom:5px;
+  border-radius:10px;
 }
 
 .ball {
@@ -20,7 +21,12 @@ main {
   height:30px;
   background-color: black;
   position: absolute;
-  left:500px;
-  bottom:400px;
+  left:465px;
+  bottom:50px;
   border-radius:50%;
+}
+
+.button {
+  font-size:20px;  
+  margin: 0 auto;
 }

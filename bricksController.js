@@ -14,6 +14,10 @@ const getBallDiv = function(document) {
   return document.getElementById("ball1");
 };
 
+const getStartButton = function(document) {
+  return document.getElementById("startButton");
+};
+
 const createDiv = function(document) {
   return document.createElement("div");
 };
@@ -34,41 +38,51 @@ const createBall = function(document) {
   mainDiv.appendChild(ballDiv);
 };
 
-const drawPaddle = function(paddleDiv, paddle) {
-  paddleDiv.style.width = addPxSuffix(paddle.width);
-  paddleDiv.style.height = addPxSuffix(paddle.height);
-  paddleDiv.style.left = addPxSuffix(paddle.left);
-  paddleDiv.style.bottom = addPxSuffix(paddle.bottom);
+const draw = function(div, classObject) {
+  div.style.width = addPxSuffix(classObject.width);
+  div.style.height = addPxSuffix(classObject.height);
+  div.style.left = addPxSuffix(classObject.left);
+  div.style.bottom = addPxSuffix(classObject.bottom);
 };
 
-const handleKeypress = function(document, paddle) {
+const handleKeypress = function(document, game) {
+  console.log(game.paddle);
+  // console.log(game.isPaddleInBorders());
   let paddleDiv = getPaddleDiv(document);
-  if (event.key == "ArrowRight") {
-    paddle.moveRight();
-    drawPaddle(paddleDiv, paddle);
+  if (event.key == "ArrowRight" && game.isPaddleInsideRight()) {
+    game.paddle.moveRight();
+    draw(paddleDiv, game.paddle);
   }
-  if (event.key == "ArrowLeft") {
-    paddle.moveLeft();
-    drawPaddle(paddleDiv, paddle);
+  if (event.key == "ArrowLeft" && game.isPaddleInsideLeft()) {
+    game.paddle.moveLeft();
+    draw(paddleDiv, game.paddle);
   }
 };
 
-const moveBall = function(document, ball) {
-  ball.move();
+const startGame = function(document, game) {
+  getMainDiv(document).focus();
   let balldiv = getBallDiv(document);
-  drawPaddle(balldiv, ball);
+  let intervalId = setInterval(() => {
+    let newGame = game.startGame();
+    draw(balldiv, newGame.ball);
+
+    if (newGame.gameStatus == "over") {
+      clearInterval(intervalId);
+      alert("gameover");
+    }
+  }, 30);
 };
 
 const initialize = function() {
   let main = getMainDiv(document);
-  main.focus();
-  let paddle = new Paddle(100, 15, 430, 3);
-  let ball = new Ball(15, 500, 400);
+  let paddle = new Paddle(120, 20, 430, 5);
+  let ball = new Ball(15, 465, 50);
   let game = new Game(960, 700, paddle, ball);
-  main.onkeydown = handleKeypress.bind(null, document, paddle);
+  main.onkeydown = handleKeypress.bind(null, document, game);
   createPaddle(document);
   createBall(document);
-  setInterval(moveBall.bind(null, document, ball), 500);
+    let startButton = getStartButton(document);
+    startButton.onclick = startGame.bind(null, document, game);
 };
 
 window.onload = initialize;
