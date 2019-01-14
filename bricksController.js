@@ -75,13 +75,13 @@ const startGame = function(document, game) {
 const initialize = function() {
   let main = getMainDiv(document);
   let paddle = new Paddle(120, 20, 430, 5);
-  let ball = new Ball(15, 465, 50);
+  let ball = new Ball(15, 465, 50, 5);
   let game = new Game(960, 700, paddle, ball);
   main.onkeydown = handleKeypress.bind(null, document, game);
   createPaddle(document);
   createBall(document);
-    let startButton = getStartButton(document);
-    startButton.onclick = startGame.bind(null, document, game);
+  let startButton = getStartButton(document);
+  startButton.onclick = startGame.bind(null, document, game);
 };
 
 window.onload = initialize;

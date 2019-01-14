@@ -20,27 +20,27 @@ describe("paddle", function() {
 describe("ball", function() {
   describe("increment", function() {
     it("should increment the given input value by 5", function() {
-      let ball = new Ball(20, 100, 100);
+      let ball = new Ball(20, 100, 100, 5);
       expect(ball.increment(6)).to.equals(11);
       expect(ball.increment(-10)).to.equals(-5);
     });
   });
   describe("decrement", function() {
     it("should increment the given input value by 5", function() {
-      let ball = new Ball(20, 100, 100);
+      let ball = new Ball(20, 100, 100, 5);
       expect(ball.decrement(6)).to.equals(1);
       expect(ball.decrement(-10)).to.equals(-15);
     });
   });
   describe("move", function() {
     it("topAction --> 'increment' bottomAction --> 'increment'", function() {
-      let ball = new Ball(20, 100, 100);
+      let ball = new Ball(20, 100, 100,5);
       ball.move();
       expect(ball.left).to.equals(105);
       expect(ball.bottom).equals(105);
     });
     it("topAction --> 'decrement' bottomAction --> 'decrement'", function() {
-      let ball = new Ball(20, 100, 100);
+      let ball = new Ball(20, 100, 100,5);
       ball.leftAction = ball.decrement;
       ball.bottomAction = ball.decrement;
       console.log(ball);
@@ -49,7 +49,7 @@ describe("ball", function() {
       expect(ball.bottom).equals(95);
     });
     it("topAction --> 'increment' bottomAction --> 'decrement'", function() {
-      let ball = new Ball(20, 100, 100);
+      let ball = new Ball(20, 100, 100,5);
       ball.leftAction = ball.increment;
       ball.bottomAction = ball.decrement;
       ball.move();
@@ -57,7 +57,7 @@ describe("ball", function() {
       expect(ball.bottom).equals(95);
     });
     it("topAction --> 'decrement' bottomAction --> 'increment'", function() {
-      let ball = new Ball(20, 100, 100);
+      let ball = new Ball(20, 100, 100,5);
       ball.leftAction = ball.decrement;
       ball.bottomAction = ball.increment;
       ball.move();
