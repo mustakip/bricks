@@ -7,6 +7,13 @@ class Game {
     this.gameStatus = "continue";
   }
 
+  hasColidedWithVerticalWalls() {
+    return this.hasColidedWithLeft() || this.hasColidedWithRight();
+  }
+
+  hasColidedWithTopOrPaddle() {
+    return this.hascolidedWithPaddle() || this.hasColidedWithTop();
+  }
   hasColidedWithTop() {
     return this.ball.bottom + this.ball.height >= this.height;
   }
@@ -40,21 +47,15 @@ class Game {
   }
 
   checkColision() {
-    if (this.hasColidedWithRight()) {
-      this.ball.leftAction = this.ball.decrement;
+    if (this.hasColidedWithVerticalWalls()) {
+      this.ball.toggleLeftAction();
     }
-    if (this.hasColidedWithLeft()) {
-      this.ball.leftAction = this.ball.increment;
-    }
-    if (this.hasColidedWithTop()) {
-      this.ball.bottomAction = this.ball.decrement;
-    }
-    if (this.hascolidedWithPaddle()) {
-      this.ball.bottomAction = this.ball.increment;
+    if (this.hasColidedWithTopOrPaddle()) {
+      this.ball.toggleBottomAction();
     }
     if (this.hasColidedWithBottom()) {
       this.gameStatus = "over";
-      this.ball.bottomAction = this.ball.increment;
+      this.ball.toggleBottomAction();
     }
   }
 
