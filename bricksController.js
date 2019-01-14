@@ -38,24 +38,29 @@ const createBall = function(document) {
   mainDiv.appendChild(ballDiv);
 };
 
-const draw = function(div, classObject) {
+const drawPaddle = function(div, classObject) {
   div.style.width = addPxSuffix(classObject.width);
   div.style.height = addPxSuffix(classObject.height);
-  div.style.left = addPxSuffix(classObject.left);
-  div.style.bottom = addPxSuffix(classObject.bottom);
+  div.style.left = addPxSuffix(classObject.position.left);
+  div.style.bottom = addPxSuffix(classObject.position.bottom);
+};
+const drawBall = function(div, classObject) {
+  div.style.width = addPxSuffix(classObject.width);
+  div.style.height = addPxSuffix(classObject.height);
+  div.style.left = addPxSuffix(classObject.position.xCoOrdinate);
+  div.style.bottom = addPxSuffix(classObject.position.yCoOrdinate);
 };
 
 const handleKeypress = function(document, game) {
   console.log(game.paddle);
-  // console.log(game.isPaddleInBorders());
   let paddleDiv = getPaddleDiv(document);
   if (event.key == "ArrowRight" && game.isPaddleInsideRight()) {
     game.paddle.moveRight();
-    draw(paddleDiv, game.paddle);
+    drawPaddle(paddleDiv, game.paddle);
   }
   if (event.key == "ArrowLeft" && game.isPaddleInsideLeft()) {
     game.paddle.moveLeft();
-    draw(paddleDiv, game.paddle);
+    drawPaddle(paddleDiv, game.paddle);
   }
 };
 
@@ -64,9 +69,10 @@ const startGame = function(document, game) {
   let balldiv = getBallDiv(document);
   let intervalId = setInterval(() => {
     let newGame = game.startGame();
-    draw(balldiv, newGame.ball);
+    drawBall(balldiv, newGame.ball);
 
     if (newGame.gameStatus == "over") {
+      alert("game Over");
       clearInterval(intervalId);
     }
   }, 20);
@@ -74,9 +80,10 @@ const startGame = function(document, game) {
 
 const initialize = function() {
   let main = getMainDiv(document);
+  let wall = new Wall(960, 700);
   let paddle = new Paddle(120, 20, 430, 5);
   let ball = new Ball(15, 465, 50, 5);
-  let game = new Game(960, 700, paddle, ball);
+  let game = new Game(wall, paddle, ball);
   main.onkeydown = handleKeypress.bind(null, document, game);
   createPaddle(document);
   createBall(document);
