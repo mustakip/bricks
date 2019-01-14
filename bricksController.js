@@ -68,7 +68,6 @@ const startGame = function(document, game) {
 
     if (newGame.gameStatus == "over") {
       clearInterval(intervalId);
-      alert("gameover");
     }
   }, 30);
 };
