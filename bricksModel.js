@@ -59,10 +59,7 @@ class Game {
     return this.ball.left <= 0;
   }
   hascolidedWithPaddle() {
-    return (
-      this.ball.bottom <= this.paddle.bottom + this.paddle.height &&
-      this.isOnThePaddle()
-    );
+    return this.isAtHeightOfPaddle && this.isOnThePaddle();
   }
   isAtHeightOfPaddle() {
     let paddleHeight = this.paddle.bottom + this.paddle.height;
@@ -75,7 +72,7 @@ class Game {
     return isWithinLeftSide && isWithinRightSide;
   }
   isPaddleInsideLeft() {
-    return this.paddle.left  > 0;
+    return this.paddle.left > 0;
   }
   isPaddleInsideRight() {
     return this.paddle.left < this.width - this.paddle.width;
