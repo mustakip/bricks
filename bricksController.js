@@ -69,7 +69,7 @@ const startGame = function(document, game) {
     if (newGame.gameStatus == "over") {
       clearInterval(intervalId);
     }
-  }, 30);
+  }, 20);
 };
 
 const initialize = function() {

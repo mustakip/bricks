@@ -1,43 +1,3 @@
-class Paddle {
-  constructor(width, height, left, bottom) {
-    this.width = width;
-    this.height = height;
-    this.left = left;
-    this.bottom = bottom;
-  }
-  moveRight() {
-    this.left += 10;
-  }
-  moveLeft() {
-    this.left -= 10;
-  }
-}
-
-class Ball {
-  constructor(radius, left, bottom, speed) {
-    this.width = radius * 2;
-    this.height = radius * 2;
-    this.left = left;
-    this.bottom = bottom;
-    this.leftAction = this.increment;
-    this.bottomAction = this.increment;
-    this.speed = speed;
-  }
-
-  increment(value) {
-    return value + this.speed;
-  }
-
-  decrement(value) {
-    return value - this.speed;
-  }
-
-  move() {
-    this.left = this.leftAction(this.left);
-    this.bottom = this.bottomAction(this.bottom);
-  }
-}
-
 class Game {
   constructor(width, height, paddle, ball) {
     this.paddle = paddle;
@@ -60,7 +20,7 @@ class Game {
     return this.ball.left <= 0;
   }
   hascolidedWithPaddle() {
-    return this.isAtHeightOfPaddle && this.isOnThePaddle();
+    return this.isAtHeightOfPaddle() && this.isOnThePaddle();
   }
   isAtHeightOfPaddle() {
     let paddleHeight = this.paddle.bottom + this.paddle.height;

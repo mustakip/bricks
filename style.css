@@ -19,7 +19,7 @@ main {
 .ball {
   width:30px;
   height:30px;
-  background-color: black;
+  background-color: red;
   position: absolute;
   left:465px;
   bottom:50px;
